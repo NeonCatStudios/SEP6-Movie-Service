@@ -30,10 +30,11 @@ jobs:
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v2.0.0
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: 6.0.4
 	
     - name: Publish .NET Core Project
       run: dotnet publish MovieApp.csproj -c Release -o release --nologo
+	  
     - name: Deploy to App Engine
       id: deploy
       uses: google-github-actions/deploy-appengine@v0.2.0
