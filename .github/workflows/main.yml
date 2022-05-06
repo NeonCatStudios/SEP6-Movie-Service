@@ -30,6 +30,8 @@ jobs:
       with:
        dotnet-version: '6.0.x'
     - run: dotnet publish MovieApp.csproj -c Release -o release --nologo
+    - run: cd release
+    - run: ls
     
     - name: Deploy to App Engine
       id: deploy
