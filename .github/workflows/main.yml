@@ -22,16 +22,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      
-    - name: Setup dotnet
-      uses: actions/setup-dotnet@v2
-	    with:
-        dotnet-version: '6.0.x
-
-     - run: dotnet publish BlazorGitHubPagesDemo.csproj -c Release -o release --nologo
-      
+    - uses: actions/checkout@v3
+    - uses: actions/setup-dotnet@v2
+      with:
+       dotnet-version: '6.0.x'
+    - run: dotnet publish BlazorGitHubPagesDemo.csproj -c Release -o release --nologo
+    
     - name: Deploy to App Engine
       id: deploy
       uses: google-github-actions/deploy-appengine@v0.2.0
