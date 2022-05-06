@@ -14,6 +14,10 @@ on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+defaults:
+ run:
+  working-directory: ./MovieApp
+  
 jobs:
   deploy:
     name: Deploying to Google Cloud
@@ -22,14 +26,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        working-directory: ./MovieApp
       
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v2.0.0
       with:
         dotnet-version: 6
-		
+	
+    - name: Publish .NET Core Project
+      run: dotnet publish MovieApp.csproj -c Release -o release --nologo
     - name: Deploy to App Engine
       id: deploy
       uses: google-github-actions/deploy-appengine@v0.2.0
