@@ -30,8 +30,9 @@ jobs:
       with:
        dotnet-version: '6.0.x'
     - run: dotnet publish MovieApp.csproj -c Release -o release --nologo
-    - run: cd release
-    - run: ls
+    - run: |
+       cd /home/runner/work/SEP6-Movie-Service/SEP6-Movie-Service/MovieApp/release/
+       ls
     
     - name: Deploy to App Engine
       id: deploy
