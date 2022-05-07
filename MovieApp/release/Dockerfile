@@ -1,4 +1,4 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
-COPY . /release
+ADD ./ /app
 WORKDIR /app
 ENTRYPOINT ["dotnet", "MovieApp.dll"]
