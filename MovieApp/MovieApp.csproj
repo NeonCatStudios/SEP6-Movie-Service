@@ -9,9 +9,6 @@
     <None Include="app.yaml" CopyToOutputDirectory="Always" />
 </ItemGroup>
 <ItemGroup>
-    <None Include="Dockerfile" CopyToOutputDirectory="Always" />
-</ItemGroup>
-<ItemGroup>
   <Folder Include="release" />
 </ItemGroup>
 
