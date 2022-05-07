@@ -4,13 +4,9 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <LangVersion>10</LangVersion>
     </PropertyGroup>
 <ItemGroup>
     <None Include="app.yaml" CopyToOutputDirectory="Always" />
-</ItemGroup>
-<ItemGroup>
-    <None Include="Dockerfile" CopyToOutputDirectory="Always" />
 </ItemGroup>
 <ItemGroup>
   <Folder Include="release" />
