@@ -5,5 +5,14 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+<ItemGroup>
+    <None Include="app.yaml" CopyToOutputDirectory="Always" />
+</ItemGroup>
+<ItemGroup>
+    <None Include="Dockerfile" CopyToOutputDirectory="Always" />
+</ItemGroup>
+<ItemGroup>
+  <Folder Include="release" />
+</ItemGroup>
 
 </Project>
