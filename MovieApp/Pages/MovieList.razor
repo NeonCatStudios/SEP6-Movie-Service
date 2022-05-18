@@ -7,7 +7,8 @@
 
 @foreach (var item in Movies)
 {
-    <MovieListItem Title="@item.Title" Year="@item.Year" Id="@item.Id"/>
+    var apiId = "tt" + @item.Id;
+    <MovieListItem Title="@item.Title" Year="@item.Year" ApiId="@apiId"/>
 }
 
 @code {

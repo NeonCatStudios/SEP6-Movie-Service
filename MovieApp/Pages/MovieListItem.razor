@@ -1,11 +1,11 @@
 <div>
-    <h3><a href = "movie/?movieId=@Id">@Title (@Year)</a></h3>
+    <h3><a href = "movie/?movieId=@ApiId">@Title (@Year)</a></h3>
 </div>
 
 
 
 @code {
-    [Parameter] public int Id { get; set; }
+    [Parameter] public String ApiId { get; set; }
     [Parameter] public String Title { get; set; }
     [Parameter] public int Year { get; set; }
 }
