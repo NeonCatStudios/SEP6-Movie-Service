@@ -6,16 +6,19 @@
     <title>Movie</title>
 </head>
 <body>
-<div style="display: flex; align-items: flex-start; justify-content: center">
-    <div>
+<div style="display: flex; align-items: flex-start; justify-content: center; height: 100%">
+    <div style="width: 55%">
         <p>@movieCache.Title</p>
         <p>Rating | @movieCache.imdbRating (@movieCache.imdbVotes)</p>
-        <img style="width: 60%" src="@movieCache.Poster"/>
+        <img style="width: 300px" src="@movieCache.Poster"/>
         <p>@movieCache.Year</p>
+        <p>Country | @movieCache.Country</p>
         <p>Director | @movieCache.Director</p>
         <p>Writer | @movieCache.Writer</p>
+        <p>Synopsis</p>
+        <p>@movieCache.Plot</p>
     </div>
-    <div>
+    <div style="width: 25%;">
         <p>Starring actors</p>
         <ul>
             @foreach (var i in Actors)
