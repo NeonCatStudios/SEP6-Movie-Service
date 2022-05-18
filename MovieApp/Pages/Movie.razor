@@ -8,17 +8,20 @@
 <body>
 <div style="display: flex; align-items: flex-start; justify-content: center">
     <div>
-        <p>@MovieName</p>
-        <p>@MovieRating (@MovieVotes)</p>
-        <img style="width: 20%" src="https://i.pinimg.com/736x/0c/bb/42/0cbb42aaf92e725156595fda959d923d.jpg"/>
-        <p>@MovieYear</p>
-        <p>@MovieDirector</p>
-       
+        <p>@movieCache.Title</p>
+        <p>Rating | @movieCache.imdbRating (@movieCache.imdbVotes)</p>
+        <img style="width: 60%" src="@movieCache.Poster"/>
+        <p>@movieCache.Year</p>
+        <p>Director | @movieCache.Director</p>
+        <p>Writer | @movieCache.Writer</p>
     </div>
     <div>
         <p>Starring actors</p>
         <ul>
-            <li>Actor</li>
+            @foreach (var i in Actors)
+            {
+                <li>@i.ToString()</li>
+            }
         </ul>
     </div>
 </div>
@@ -26,25 +29,26 @@
 
 @code
 {
-    private String MovieName;
-    private String MovieYear;
-    private String MovieDirector;
-    private String MovieRating;
-    private String MovieVotes;
     [Parameter]
     [SupplyParameterFromQuery(Name = "movieId")]
     public String movieId { get; set; } = "";
 
+    private String RatingString;
+    private List<String> Actors;
+    public OMDBMovie movieCache = new OMDBMovie();
+
     protected override void OnInitialized()
     {
         movieId = movieId ?? "";
+        movieId = "tt" + movieId;
         Console.WriteLine(movieId);
         GetMovieInfo(movieId);
     }
 
     public void GetMovieInfo(String id)
     {
-
+        movieCache = movieController.getMovies(id);
+        Actors = movieCache.Actors.Split(", ").ToList();
     }
 
 }

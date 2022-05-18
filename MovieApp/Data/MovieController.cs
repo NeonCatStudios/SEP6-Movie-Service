@@ -9,9 +9,8 @@ public class MovieController
         _movieDbo = new MovieDBO();
     }
 
-    public async Task<Dictionary<String, String>> getMovies(String movieId)
+    public OMDBMovie getMovies(String movieId)
     {
-        
-        return movies;
+        return _movieDbo.getMovieInfoJson(movieId).Result;
     }
 }

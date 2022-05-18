@@ -1,26 +1,32 @@
-﻿namespace MovieApp.Data;
-using MySql.Data.MySqlClient;
-    
+﻿using System.Collections.Specialized;
+using System.Text.Json;
+namespace MovieApp.Data;
+
 public class MovieDBO
 {
-    private string databaseIP = "34.140.207.17";
-    private string DatabaseName = "movie";
-    private string usernameDatabase = "root";
-    private string databasePassword = "hellokitty123";
-    private MySqlConnection databaseConnection { get; set; }
-
+    private String OMDBApiKey = "7463b8f9";
+    private String OMDBUrl = "http://www.omdbapi.com/";
+    static HttpClient client = new HttpClient();
     public MovieDBO()
     {
-        string connectionString = string.Format("Server={0}; database={1}; UID={2}; password={3}", databaseIP, DatabaseName, usernameDatabase, databasePassword);
-        databaseConnection = new MySqlConnection(connectionString);
-        databaseConnection.Open();
-        Console.WriteLine($"MySQL version : {databaseConnection.ServerVersion}");
+        client.BaseAddress = new Uri(OMDBUrl);
     }
-
-    public String getMovieInfoJson(String movieId)
+    public async Task<OMDBMovie> getMovieInfoJson(String movieId)
     {
-      
-        
-        return movieDictionary;
+        OMDBMovie movie = new OMDBMovie();
+        NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
+        queryString.Add("i", movieId);
+        queryString.Add("apikey", OMDBApiKey);
+        HttpResponseMessage response = client.GetAsync("?"+queryString.ToString()).Result;
+        if (response.IsSuccessStatusCode)
+        {
+            String omdbMovieString =  response.Content.ReadAsStringAsync().Result;
+            movie = JsonSerializer.Deserialize<OMDBMovie>(omdbMovieString);
+        }
+        else
+        {
+          Console.WriteLine(response.StatusCode);  
+        }
+        return movie;
     }
 }
