@@ -11,7 +11,7 @@ public class Movie
     [AllowNull]
     public string Title { get; set; }
     [AllowNull]
-    public BigInteger Year;
+    public int Year;
     [AllowNull]
     public Person Actor { get; set; }
     [AllowNull]

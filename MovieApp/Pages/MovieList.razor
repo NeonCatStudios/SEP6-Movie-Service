@@ -1,0 +1,28 @@
+@page "/movieList"
+@using MovieApp.Data
+
+<PageTitle>Movie List</PageTitle>
+
+<h1>Movie List</h1>
+
+@foreach (var item in Movies)
+{
+    <MovieListItem Title="@item.Title" Year="@item.Year" Id="@item.Id"/>
+}
+
+@code {
+
+    public List<Data.Movie> Movies = new List<Data.Movie>
+    {
+        new Data.Movie {Id = 9140554, Year = 2021, Title = "Lokis" },
+        new Data.Movie {Id = 831387, Year = 2014, Title = "Godzilla" }
+    };
+    
+    //[Parameter] public RenderFragment<Movie> MovieListItemView { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+
+}

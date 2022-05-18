@@ -8,57 +8,65 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MovieApp
 build_property.RootNamespace = MovieApp
-build_property.ProjectDir = C:\Users\mundu\OneDrive\Software Personal Project\Clicker Game\SEP6-Movie-Service\MovieApp\
+build_property.ProjectDir = /Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\mundu\OneDrive\Software Personal Project\Clicker Game\SEP6-Movie-Service\MovieApp
+build_property.MSBuildProjectDirectory = /Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/App.razor]
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Pages/FetchData.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/Pages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/Pages/Movie.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWUucmF6b3I=
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Pages/Movie.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTW92aWUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/Shared/SurveyPrompt.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Pages/MovieList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTW92aWVMaXN0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/_Imports.razor]
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Pages/MovieListItem.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTW92aWVMaXN0SXRlbS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1N1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/Shared/MainLayout.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-1wuub24aij
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL01haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-ccqn4xzfxg
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/Shared/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-0mp14bwqby
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL05hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-1k4bmjwaep
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/Pages/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/Pages/_Host.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mundu/OneDrive/Software Personal Project/Clicker Game/SEP6-Movie-Service/MovieApp/Pages/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
+[/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/Pages/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
