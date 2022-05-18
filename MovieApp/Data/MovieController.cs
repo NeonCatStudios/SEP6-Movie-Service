@@ -11,7 +11,7 @@ public class MovieController
 
     public async Task<Dictionary<String, String>> getMovies(String movieId)
     {
-        Dictionary<String, String> movies = _movieDbo.getMovieInfo(movieId);
+        
         return movies;
     }
 }
