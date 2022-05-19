@@ -6,26 +6,31 @@
     <title>Movie</title>
 </head>
 <body>
-<div style="display: flex; align-items: flex-start; justify-content: center; height: 100%">
-    <div style="width: 55%">
-        <p>@movieCache.Title</p>
-        <p>Rating | @movieCache.imdbRating (@movieCache.imdbVotes)</p>
-        <img style="width: 300px" src="@movieCache.Poster"/>
-        <p>@movieCache.Year</p>
-        <p>Country | @movieCache.Country</p>
-        <p>Director | @movieCache.Director</p>
-        <p>Writer | @movieCache.Writer</p>
-        <p>Synopsis</p>
-        <p>@movieCache.Plot</p>
-    </div>
-    <div style="width: 25%;">
-        <p>Starring actors</p>
-        <ul>
-            @foreach (var i in Actors)
-            {
-                <li>@i.ToString()</li>
-            }
-        </ul>
+<div class="background-container" style="">
+    <div class="sub-container">
+        <div class="content-box movie-left">
+            <p class="movie-title">@movieCache.Title (@movieCache.Year)</p>
+            <p>@movieCache.imdbRating★ (@movieCache.imdbVotes)</p>
+            <img class="poster" src="@movieCache.Poster"/>
+        </div>
+        <div class="sub-container">
+            <div class="content-box" style="width: 100%">
+                <p>Country | @movieCache.Country</p>
+                <p>Director | @movieCache.Director</p>
+                <p>Writer | @movieCache.Writer</p>
+                <p>Synopsis</p>
+                <p>@movieCache.Plot</p>
+            </div>
+             <div class="content-box" style="width: 100%;">
+                                <p class="actor-list-title">Starring actors</p>
+                         <ul class="actor-list">
+                                    @foreach (var i in Actors)
+                                    {
+                                        <li>@i.ToString()</li>
+                                    }
+                                </ul>
+                            </div>
+        </div>
     </div>
 </div>
 </body>
@@ -44,14 +49,18 @@
     {
         movieId = movieId ?? "";
         movieId = "tt" + movieId;
-        Console.WriteLine(movieId);
         GetMovieInfo(movieId);
     }
 
-    public void GetMovieInfo(String id)
+    public void GetMovieInfo(String movieId)
     {
-        movieCache = movieController.getMovies(id);
+        movieCache = movieController.getMovies(movieId);
         Actors = movieCache.Actors.Split(", ").ToList();
+    }
+
+    public void getActorLinks(String movieId)
+    {
+        
     }
 
 }
