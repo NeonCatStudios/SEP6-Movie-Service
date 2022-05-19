@@ -11,24 +11,50 @@
         <div class="content-box movie-left">
             <p class="movie-title">@movieCache.Title (@movieCache.Year)</p>
             <p>@movieCache.imdbRating★ (@movieCache.imdbVotes)</p>
-            <img class="poster" src="@movieCache.Poster"/>
+            <img class="poster" alt="Poster Image" src="@movieCache.Poster"/>
         </div>
         <div class="sub-container">
             <div class="content-box" style="width: 100%">
                 <p>Country | @movieCache.Country</p>
-                <p>Director | @movieCache.Director</p>
+                <p>Director | 
+                    @if (directorCache.BirthYear == 0)
+                    {
+                        @if (directorCache.isInDB)
+                        {
+                           <a>@directorCache.Name @directorCache.BirthYear</a> 
+                        }
+                        else
+                        {
+                            @movieCache.Director
+                        }
+                    }
+                    </p>
                 <p>Writer | @movieCache.Writer</p>
                 <p>Synopsis</p>
                 <p>@movieCache.Plot</p>
             </div>
              <div class="content-box" style="width: 100%;">
                                 <p class="actor-list-title">Starring actors</p>
-                         <ul class="actor-list">
-                                    @foreach (var i in Actors)
-                                    {
-                                        <li>@i.ToString()</li>
-                                    }
-                                </ul>
+                 <ul class="actor-list">
+                     @if (!actorCache.Any())
+                     {
+                         <li>Loading Data...</li>
+                     }
+                     else
+                     {
+                         @foreach (var i in actorCache)
+                         {
+                             if (i.isInDB)
+                             {
+                                 <li><a href="../person/@i.Id">@i.Name (@i.BirthYear)</a></li>
+                             }
+                             else
+                             {
+                                 <li>@i.Name</li>
+                             }
+                         }
+                         }
+                 </ul>
                             </div>
         </div>
     </div>
@@ -41,26 +67,36 @@
     [SupplyParameterFromQuery(Name = "movieId")]
     public String movieId { get; set; } = "";
 
+    private List<Person> actorCache = new List<Person>();
     private String RatingString;
-    private List<String> Actors;
-    public OMDBMovie movieCache = new OMDBMovie();
+    private Person directorCache = new Person();
+    public OMDBMovie movieCache;
 
-    protected override void OnInitialized()
+    protected async  override void OnInitialized()
     {
-        movieId = movieId ?? "";
-        movieId = "tt" + movieId;
-        GetMovieInfo(movieId);
+        directorCache.BirthYear = 0;
+        movieId = "tt" + movieId ?? "";
+        await GetMovieInfo(movieId);
     }
 
-    public void GetMovieInfo(String movieId)
+    protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        movieCache = movieController.getMovies(movieId);
-        Actors = movieCache.Actors.Split(", ").ToList();
+        checkActorsInDB(movieCache);
+        return base.OnAfterRenderAsync(firstRender);
     }
 
-    public void getActorLinks(String movieId)
+    public async Task GetMovieInfo(String movieIdMethod)
     {
-        
+        Console.WriteLine(movieIdMethod);
+        movieCache = movieController.getMovies(movieIdMethod);
+        StateHasChanged();
+    }
+
+    public async Task checkActorsInDB(OMDBMovie omdbMovie)
+    {
+        actorCache = movieController.checkActors(omdbMovie).FindAll(i => i.isDirector == false);
+        //directorCache = movieController.checkActors(omdbMovie).Find(i => i.isDirector);
+        this.StateHasChanged();
     }
 
 }

@@ -7,7 +7,7 @@
 
 @foreach (var item in Movies)
 {
-    var apiId = "tt" + @item.Id;
+    var apiId = @item.Id.ToString("D7");
     <MovieListItem Title="@item.Title" Year="@item.Year" ApiId="@apiId"/>
 }
 
@@ -16,14 +16,15 @@
     public List<Data.Movie> Movies = new List<Data.Movie>
     {
         new Data.Movie {Id = 816692, Year = 2014, Title = "Interstellar" },
-        new Data.Movie {Id = 831387, Year = 2014, Title = "Godzilla" }
+        new Data.Movie {Id = 831387, Year = 2014, Title = "Godzilla" },
+        new Data.Movie {Id= 38687, Year = 1980, Title = "Let There Be Light"}
     };
     
     //[Parameter] public RenderFragment<Movie> MovieListItemView { get; set; }
     
     protected override async Task OnInitializedAsync()
     {
-        
+        Console.WriteLine(Movies.First());
     }
 
 }

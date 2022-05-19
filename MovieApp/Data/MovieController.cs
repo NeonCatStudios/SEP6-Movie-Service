@@ -13,4 +13,9 @@ public class MovieController
     {
         return _movieDbo.getMovieInfoJson(movieId).Result;
     }
+
+    public List<Person> checkActors(OMDBMovie omdbMovie)
+    {
+        return _movieDbo.getMovieActorsFromDB(omdbMovie).Result;
+    }
 }
