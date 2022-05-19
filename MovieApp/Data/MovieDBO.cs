@@ -125,4 +125,37 @@ public class MovieDBO
         rdr2.Close();
         return persons;
     }
+
+    public async Task<PersonPageInfo> getPersonPageInfo(int personId)
+    {
+        PersonPageInfo result = new PersonPageInfo();
+        // person info
+        string sql = $"SELECT * FROM people where id = {personId}";
+        await using var cmd = new MySqlCommand(sql, databaseConnection);
+        await using MySqlDataReader rdr = cmd.ExecuteReader();
+        while (rdr.Read())
+        {
+            result.person = new Person{Name = Convert.ToString(rdr["name"]),  BirthYear = Convert.ToInt64(rdr["birth"])};
+        }
+        rdr.Close();
+        // starred movies
+        string sql2 = $"SELECT m.id as id, m.title as title, m.year as year FROM stars s join movies m on s.movie_id = m.id where s.person_id = {personId}";
+        await using var cmd2 = new MySqlCommand(sql2, databaseConnection);
+        await using MySqlDataReader rdr2 = cmd2.ExecuteReader();
+        while (rdr2.Read())
+        {
+            result.StarredMovies.Add(new Movie{Id = Convert.ToInt32(rdr2["id"]), Title = Convert.ToString(rdr2["title"]), Year = Convert.ToInt32(rdr2["year"])});
+        }
+        rdr2.Close();
+        // directed movies
+        string sql3 = $"SELECT m.id as id, m.title as title, m.year as year FROM directors s join movies m on s.movie_id = m.id where s.person_id = {personId}";
+        await using var cmd3 = new MySqlCommand(sql3, databaseConnection);
+        await using MySqlDataReader rdr3 = cmd3.ExecuteReader();
+        while (rdr3.Read())
+        {
+            result.DirectedMovies.Add(new Movie{Id = Convert.ToInt32(rdr3["id"]), Title = Convert.ToString(rdr3["title"]), Year = Convert.ToInt32(rdr3["year"])});
+        }
+        rdr3.Close();
+        return result;
+    }
 }

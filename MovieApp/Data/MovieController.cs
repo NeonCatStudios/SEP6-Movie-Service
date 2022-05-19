@@ -18,4 +18,9 @@ public class MovieController
     {
         return _movieDbo.getMovieActorsFromDB(omdbMovie).Result;
     }
+
+    public PersonPageInfo getPersonPageInfo(int personId)
+    {
+        return _movieDbo.getPersonPageInfo(personId).Result;
+    }
 }

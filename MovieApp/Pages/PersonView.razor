@@ -1,0 +1,25 @@
+@page "/person/{personId}"
+@using MovieApp.Data
+@inject MovieController movieController
+
+<h3>@info.person.Name (@info.person.BirthYear)</h3>
+
+@if(@info.StarredMovies.Count > 0){
+<ul>
+    @foreach (var starMovie in @info.StarredMovies)
+    {
+        <li>@starMovie.Title (@starMovie.Year)</li>
+    }
+</ul>
+}
+
+@code {
+    [Parameter]public string personId { get; set; }
+    PersonPageInfo info;
+
+    protected override void OnInitialized()
+    {
+        info = movieController.getPersonPageInfo(Convert.ToInt32(personId));
+    }
+
+}

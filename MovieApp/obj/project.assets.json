@@ -852,19 +852,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mundu\\.nuget\\packages\\": {}
+    "/Users/danmosk/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mundu\\RiderProjects\\MovieApp\\MovieApp\\MovieApp.csproj",
+      "projectUniqueName": "/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/MovieApp.csproj",
       "projectName": "MovieApp",
-      "projectPath": "C:\\Users\\mundu\\RiderProjects\\MovieApp\\MovieApp\\MovieApp.csproj",
-      "packagesPath": "C:\\Users\\mundu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mundu\\RiderProjects\\MovieApp\\MovieApp\\obj\\",
+      "projectPath": "/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/MovieApp.csproj",
+      "packagesPath": "/Users/danmosk/.nuget/packages/",
+      "outputPath": "/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\mundu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/danmosk/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -911,7 +911,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\mundu\\.dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/Users/danmosk/.dotnet/sdk/6.0.202/RuntimeIdentifierGraph.json"
       }
     }
   }
