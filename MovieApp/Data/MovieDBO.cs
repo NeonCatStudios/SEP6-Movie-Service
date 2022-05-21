@@ -1,7 +1,6 @@
 ﻿using System.Collections.Specialized;
-using System.Text.Json;
-using Microsoft.VisualBasic;
 using MySql.Data.MySqlClient;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace MovieApp.Data;
 
@@ -19,14 +18,15 @@ public class MovieDBO
     private string databasePassword = "hellokitty123";
 
     private MySqlConnection databaseConnection { get; set; }
+    private string ConnectionString { get; set; }
 
     //-----------------------------------------------------------------------------------
     public MovieDBO()
     {
         //---------------to be removed---------------
-        string connectionString = string.Format("Server={0}; database={1}; UID={2}; password={3}", databaseIP,
+        ConnectionString = string.Format("Server={0}; database={1}; UID={2}; password={3}", databaseIP,
             DatabaseName, usernameDatabase, databasePassword);
-        databaseConnection = new MySqlConnection(connectionString);
+        databaseConnection = new MySqlConnection(ConnectionString);
         databaseConnection.Open();
         //----------------------------------------
         client.BaseAddress = new Uri(OMDBUrl);
@@ -144,7 +144,7 @@ public class MovieDBO
         await using MySqlDataReader rdr2 = cmd2.ExecuteReader();
         while (rdr2.Read())
         {
-            result.StarredMovies.Add(new Movie{Id = Convert.ToInt32(rdr2["id"]), Title = Convert.ToString(rdr2["title"]), Year = Convert.ToInt32(rdr2["year"])});
+            result.StarredMovies.Add(new Movie{id = Convert.ToInt32(rdr2["id"]), title = Convert.ToString(rdr2["title"]), year = Convert.ToInt32(rdr2["year"])});
         }
         rdr2.Close();
         // directed movies
@@ -153,9 +153,25 @@ public class MovieDBO
         await using MySqlDataReader rdr3 = cmd3.ExecuteReader();
         while (rdr3.Read())
         {
-            result.DirectedMovies.Add(new Movie{Id = Convert.ToInt32(rdr3["id"]), Title = Convert.ToString(rdr3["title"]), Year = Convert.ToInt32(rdr3["year"])});
+            result.DirectedMovies.Add(new Movie{id = Convert.ToInt32(rdr3["id"]), title = Convert.ToString(rdr3["title"]), year = Convert.ToInt32(rdr3["year"])});
         }
         rdr3.Close();
         return result;
+    }
+
+    public async Task<List<Movie>> GetMovies(int page)
+    {
+        int offset = (page - 1) * 50;
+        Console.WriteLine(offset);
+        using var httpClient = new HttpClient();
+        HttpResponseMessage responseMessage = httpClient.GetAsync($"https://europe-west1-sep6-movie-service.cloudfunctions.net/getMovies?offset={offset}").Result;
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            Console.WriteLine(responseMessage);
+            string result = responseMessage.Content.ReadAsStringAsync().Result;
+            List<Movie> res = JsonSerializer.Deserialize<List<Movie>>(result);
+            return res;
+        }
+        return null;
     }
 }

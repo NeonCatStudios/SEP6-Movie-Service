@@ -6,15 +6,10 @@ namespace MovieApp.Data;
 [Serializable]
 public class Movie
 {
-    [NotNull]
-    public int Id { get; set; }
-    [AllowNull]
-    public string Title { get; set; }
-    [AllowNull]
-    public int Year;
-    [AllowNull]
-    public Person Actor { get; set; }
-    [AllowNull]
-    public Person Director { get; set; }
+    [NotNull] public int id { get; set; }
+    [AllowNull] public string title { get; set; }
+    [AllowNull] public int year { get; set; }
+    [AllowNull] public Person Actor { get; set; }
+    [AllowNull] public Person Director { get; set; }
     
 }
