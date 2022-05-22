@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using Microsoft.CSharp.RuntimeBinder;
 using MySql.Data.MySqlClient;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -83,15 +84,15 @@ public class MovieDBO
                 Person person = new Person();
                 if (Convert.ToInt32(rdr["id"]) > 0)
                 {
-                    person.Name = Convert.ToString(rdr["name"]);
-                    person.Id = Convert.ToInt32(rdr["id"]);
-                    person.BirthYear = Convert.ToInt32(rdr["birth"]);
+                    person.name = Convert.ToString(rdr["name"]);
+                    person.id = Convert.ToInt32(rdr["id"]);
+                    person.birth = Convert.ToInt32(rdr["birth"]);
                     person.isDirector = false;
                     person.isInDB = true;
                 }
                 else
                 {
-                    person.Name = actor;
+                    person.name = actor;
                     person.isInDB = false;
                 }
 
@@ -107,15 +108,15 @@ public class MovieDBO
             Person person = new Person();
             if (Convert.ToInt32(rdr2["id"]) == 0)
             {
-                person.Name = Convert.ToString(rdr2["name"]);
-                person.Id = Convert.ToInt32(rdr2["id"]);
-                person.BirthYear = Convert.ToInt64(rdr2["birth"]);
+                person.name = Convert.ToString(rdr2["name"]);
+                person.id = Convert.ToInt32(rdr2["id"]);
+                person.birth = Convert.ToInt16(rdr2["birth"]);
                 person.isDirector = false;
                 person.isInDB = true;
             }
             else
             {
-                person.Name = omdbMovie.Director;
+                person.name = omdbMovie.Director;
                 person.isInDB = false;
             }
 
@@ -128,35 +129,17 @@ public class MovieDBO
 
     public async Task<PersonPageInfo> getPersonPageInfo(int personId)
     {
+        using var httpClient = new HttpClient();
+        HttpResponseMessage responseMessage = httpClient.GetAsync($"https://europe-west1-sep6-movie-service.cloudfunctions.net/getPersonInfo?personId={personId}").Result;
+
         PersonPageInfo result = new PersonPageInfo();
-        // person info
-        string sql = $"SELECT * FROM people where id = {personId}";
-        await using var cmd = new MySqlCommand(sql, databaseConnection);
-        await using MySqlDataReader rdr = cmd.ExecuteReader();
-        while (rdr.Read())
+        if (responseMessage.IsSuccessStatusCode)
         {
-            result.person = new Person{Name = Convert.ToString(rdr["name"]),  BirthYear = Convert.ToInt64(rdr["birth"])};
+            string res = responseMessage.Content.ReadAsStringAsync().Result;
+            result = JsonSerializer.Deserialize<PersonPageInfo>(res);
         }
-        rdr.Close();
-        // starred movies
-        string sql2 = $"SELECT m.id as id, m.title as title, m.year as year FROM stars s join movies m on s.movie_id = m.id where s.person_id = {personId}";
-        await using var cmd2 = new MySqlCommand(sql2, databaseConnection);
-        await using MySqlDataReader rdr2 = cmd2.ExecuteReader();
-        while (rdr2.Read())
-        {
-            result.StarredMovies.Add(new Movie{id = Convert.ToInt32(rdr2["id"]), title = Convert.ToString(rdr2["title"]), year = Convert.ToInt32(rdr2["year"])});
-        }
-        rdr2.Close();
-        // directed movies
-        string sql3 = $"SELECT m.id as id, m.title as title, m.year as year FROM directors s join movies m on s.movie_id = m.id where s.person_id = {personId}";
-        await using var cmd3 = new MySqlCommand(sql3, databaseConnection);
-        await using MySqlDataReader rdr3 = cmd3.ExecuteReader();
-        while (rdr3.Read())
-        {
-            result.DirectedMovies.Add(new Movie{id = Convert.ToInt32(rdr3["id"]), title = Convert.ToString(rdr3["title"]), year = Convert.ToInt32(rdr3["year"])});
-        }
-        rdr3.Close();
         return result;
+
     }
 
     public async Task<List<Movie>> GetMovies(int page)

@@ -17,11 +17,11 @@
             <div class="content-box" style="width: 100%">
                 <p>Country | @movieCache.Country</p>
                 <p>Director | 
-                    @if (directorCache.BirthYear == 0)
+                    @if (directorCache.birth == 0)
                     {
                         @if (directorCache.isInDB)
                         {
-                           <a>@directorCache.Name @directorCache.BirthYear</a> 
+                           <a>@directorCache.name @directorCache.birth</a> 
                         }
                         else
                         {
@@ -46,11 +46,11 @@
                          {
                              if (i.isInDB)
                              {
-                                 <li><a href="../person/@i.Id">@i.Name (@i.BirthYear)</a></li>
+                                 <li><a href="../person/@i.id">@i.name (@i.birth)</a></li>
                              }
                              else
                              {
-                                 <li>@i.Name</li>
+                                 <li>@i.name</li>
                              }
                          }
                          }
@@ -74,7 +74,7 @@
 
     protected async  override void OnInitialized()
     {
-        directorCache.BirthYear = 0;
+        directorCache.birth = 0;
         movieId = "tt" + movieId ?? "";
         await GetMovieInfo(movieId);
     }

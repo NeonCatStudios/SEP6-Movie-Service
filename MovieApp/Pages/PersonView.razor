@@ -2,17 +2,33 @@
 @using MovieApp.Data
 @inject MovieController movieController
 
-<h3>@info.person.Name (@info.person.BirthYear)</h3>
-
-@if(@info.StarredMovies.Count > 0){
-<ul>
-    @foreach (var starMovie in @info.StarredMovies)
+<h3>@info.person.name (@info.person.birth)</h3>
+<div class="flex-container-row">
+    @if (@info.directedMovies.Count > 0)
     {
-        <li>@starMovie.title (@starMovie.year)</li>
+        <div class="50-pct">
+            <h4>Directed:</h4>
+            <ul>
+                @foreach (var directedMovie in @info.directedMovies)
+                {
+                    <li><a href="/movie?movieId=@directedMovie.id.ToString("D7")">@directedMovie.title (@directedMovie.year)</a></li>
+                }
+            </ul>    
+        </div>
     }
-</ul>
-}
 
+    @if(@info.starredMovies.Count > 0){
+        <div class="50-pct">
+            <h4>Starred in:</h4>
+            <ul>
+                @foreach (var starMovie in @info.starredMovies)
+                {
+                    <li><a href="/movie?movieId=@starMovie.id.ToString("D7")">@starMovie.title (@starMovie.year)</a></li>
+                }
+            </ul>
+        </div>
+    }
+</div>
 @code {
     [Parameter]public string personId { get; set; }
     PersonPageInfo info;

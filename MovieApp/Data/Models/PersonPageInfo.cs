@@ -2,15 +2,15 @@ namespace MovieApp.Data;
 
 [Serializable] public class PersonPageInfo
 {
+    public List<Movie> starredMovies { get; set; }
+    public List<Movie> directedMovies { get; set; }
+    public Person person { get; set; }
+    
     public PersonPageInfo()
     {
-        StarredMovies = new List<Movie>();
-        DirectedMovies = new List<Movie>();
+        starredMovies = new List<Movie>();
+        directedMovies = new List<Movie>();
 
     }
-    
-    public Person person;
-    public List<Movie> StarredMovies;
-    public List<Movie> DirectedMovies;
 
 }
