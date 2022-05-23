@@ -75,7 +75,11 @@ else
     {
         directorCache.birth = 0;
         movieId = "tt" + movieId ?? "";
-        await Task.Run(() => GetMovieInfo(movieId) );
+        await InvokeAsync(() =>
+        {
+            GetMovieInfo(movieId);
+            StateHasChanged();
+        });
     }
 
     protected override Task OnAfterRenderAsync(bool firstRender)
@@ -88,13 +92,13 @@ else
     {
         Console.WriteLine(movieIdMethod);
         movieCache = await movieController.getMovies(movieIdMethod);
-        //StateHasChanged();
+        StateHasChanged();
     }
 
     public async Task checkActorsInDB(String movieId)
     {
         actorCache = movieController.checkActors(movieId);
-        //this.StateHasChanged();
+        this.StateHasChanged();
     }
 
 }
