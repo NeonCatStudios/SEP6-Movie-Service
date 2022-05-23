@@ -22,7 +22,7 @@ else
     @foreach (var item in Movies)
     {
         var apiId = @item.id.ToString("D7");
-        <MovieListItem Title="@item.title" Year="@item.year" ApiId="@apiId"/>
+        <MovieListItem Title="@item.title" Year="@item.year" Rating="@item.rating" Votes="@item.votes" ApiId="@apiId" />
     }
 }
 

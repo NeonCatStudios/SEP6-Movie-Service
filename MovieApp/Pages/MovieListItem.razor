@@ -1,5 +1,6 @@
 <div>
     <h3><a href = "movie/?movieId=@ApiId">@Title (@Year)</a></h3>
+    Rating: @Rating ⭐ (@Votes votes)
 </div>
 
 
@@ -8,4 +9,7 @@
     [Parameter] public String ApiId { get; set; }
     [Parameter] public String Title { get; set; }
     [Parameter] public int Year { get; set; }
+    [Parameter] public float Rating { get; set; }
+    [Parameter] public int Votes { get; set; }
+    
 }
