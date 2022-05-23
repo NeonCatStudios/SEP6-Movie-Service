@@ -1,5 +1,6 @@
+@using MovieApp.Data
 <div>
-    <h3><a href = "movie/?movieId=@ApiId">@Title (@Year)</a></h3>
+    <h3><a href = "movie/?movieId=@ApiId">@Title @Utils.YearFilter(@Year)</a></h3>
     Rating: @Rating ⭐ (@Votes votes)
 </div>
 

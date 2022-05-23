@@ -9,9 +9,9 @@ public class MovieController
         _movieDbo = new MovieDBO();
     }
 
-    public OMDBMovie getMovies(String movieId)
+    public async Task<OMDBMovie> getMovies(String movieId)
     {
-        return _movieDbo.getMovieInfoJson(movieId).Result;
+        return await _movieDbo.getMovieInfoJson(movieId);
     }
 
     public List<Person> checkActors(String movieId)

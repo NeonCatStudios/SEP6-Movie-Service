@@ -42,7 +42,7 @@ public class MovieDBO
         HttpResponseMessage response = client.GetAsync("?" + queryString.ToString()).Result;
         if (response.IsSuccessStatusCode)
         {
-            String omdbMovieString = response.Content.ReadAsStringAsync().Result;
+            String omdbMovieString = await response.Content.ReadAsStringAsync();
             movie = JsonSerializer.Deserialize<OMDBMovie>(omdbMovieString);
         }
         else

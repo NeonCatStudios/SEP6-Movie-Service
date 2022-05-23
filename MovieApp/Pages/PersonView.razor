@@ -8,7 +8,7 @@
 }
 else
 {
-    <h3>@info.person.name (@info.person.birth)</h3>
+    <h3>@info.person.name @Utils.YearFilter(@info.person.birth)</h3>
     <div class="flex-container-row">
         @if (@info.directedMovies.Count > 0)
         {
@@ -17,7 +17,7 @@ else
                 <ul>
                     @foreach (var directedMovie in @info.directedMovies)
                     {
-                        <li><a href="/movie?movieId=@directedMovie.id.ToString("D7")">@directedMovie.title (@directedMovie.year)</a></li>
+                        <li><a href="/movie?movieId=@directedMovie.id.ToString("D7")">@directedMovie.title @Utils.YearFilter(@directedMovie.year)</a></li>
                     }
                 </ul>    
             </div>

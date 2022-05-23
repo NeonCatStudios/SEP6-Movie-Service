@@ -9,7 +9,7 @@
 @if (movieCache == null)
 {
     <body>
-     <div class="spinner"> <img src="img/loading.gif"/></div>
+        <div class="spinner"> <img src="img/loading.gif"/></div>
     </body>
 }
 else
@@ -45,7 +45,7 @@ else
                           {
                               if (i.isInDB)
                               {
-                                  <li><a href="../person/@i.id">@i.name (@i.birth)</a></li>
+                                  <li><a href="../person/@i.id">@i.name @(Utils.YearFilter(@i.birth))</a></li>
                               }
                               else
                               {
@@ -69,13 +69,13 @@ else
     private List<Person> actorCache = new List<Person>();
     private String RatingString;
     private Person directorCache = new Person();
-    public OMDBMovie movieCache;
+    public OMDBMovie movieCache = null;
 
-    protected async  override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         directorCache.birth = 0;
         movieId = "tt" + movieId ?? "";
-        await GetMovieInfo(movieId);
+        await Task.Run(() => GetMovieInfo(movieId) );
     }
 
     protected override Task OnAfterRenderAsync(bool firstRender)
@@ -87,14 +87,14 @@ else
     public async Task GetMovieInfo(String movieIdMethod)
     {
         Console.WriteLine(movieIdMethod);
-        movieCache = movieController.getMovies(movieIdMethod);
-        StateHasChanged();
+        movieCache = await movieController.getMovies(movieIdMethod);
+        //StateHasChanged();
     }
 
     public async Task checkActorsInDB(String movieId)
     {
         actorCache = movieController.checkActors(movieId);
-        this.StateHasChanged();
+        //this.StateHasChanged();
     }
 
 }

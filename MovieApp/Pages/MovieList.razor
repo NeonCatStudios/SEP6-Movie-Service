@@ -27,7 +27,7 @@ else
 }
 
 @code {
-    [AllowNull]public List<Data.Movie> Movies;
+    [AllowNull]public List<Data.Movie> Movies = null;
     public string MovieTitleQuery;
     public int Page = 1;
     
@@ -36,11 +36,9 @@ else
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
         var query = QueryHelpers.ParseQuery(uri.Query);
         
-        if (query.TryGetValue("title", out var movieTitle))
-        { MovieTitleQuery = movieTitle; }
+        if (query.TryGetValue("title", out var movieTitle)){ MovieTitleQuery = movieTitle; }
 
-        if (query.TryGetValue("page", out var page))
-        { Page = Convert.ToInt16(page); }
+        if (query.TryGetValue("page", out var page)){ Page = Convert.ToInt16(page); }
 
     }
     
