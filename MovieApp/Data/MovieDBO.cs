@@ -142,12 +142,24 @@ public class MovieDBO
 
     }
 
-    public async Task<List<Movie>> GetMovies(int page)
+    public async Task<List<Movie>> GetMovies(int page, string title)
     {
+        if (page <= 0)
+        {
+            page = 1;
+        }
         int offset = (page - 1) * 50;
-        Console.WriteLine(offset);
+        
+        string parameterString = $"offset={offset}";
+
+        if (title != null)
+        {
+            parameterString += $"&title={title}";
+        }
+
         using var httpClient = new HttpClient();
-        HttpResponseMessage responseMessage = httpClient.GetAsync($"https://europe-west1-sep6-movie-service.cloudfunctions.net/getMovies?offset={offset}").Result;
+        HttpResponseMessage responseMessage = httpClient.GetAsync($"https://europe-west1-sep6-movie-service.cloudfunctions.net/getMovies?{parameterString}").Result;
+        
         if (responseMessage.IsSuccessStatusCode)
         {
             Console.WriteLine(responseMessage);

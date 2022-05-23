@@ -24,8 +24,8 @@ public class MovieController
         return _movieDbo.getPersonPageInfo(personId).Result;
     }
 
-    public List<Movie> getMovies(int page)
+    public List<Movie> getMovies(int page, string title)
     {
-        return _movieDbo.GetMovies(page).Result;
+        return _movieDbo.GetMovies(page: page, title: title).Result;
     }
 }
