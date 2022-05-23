@@ -7,6 +7,7 @@
     </PropertyGroup>
 <ItemGroup>
     <None Include="app.yaml" CopyToOutputDirectory="Always" />
+    <None Include="wwwroot\img\loading.gif" />
 </ItemGroup>
 <ItemGroup>
     <None Include="Dockerfile" CopyToOutputDirectory="Always" />

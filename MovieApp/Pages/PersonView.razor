@@ -1,41 +1,53 @@
 @page "/person/{personId}"
 @using MovieApp.Data
+@using System.Diagnostics.CodeAnalysis
 @inject MovieController movieController
+@if (info == null)
+{
+    <div class="spinner"> <img src="img/loading.gif"/></div>
+}
+else
+{
+    <h3>@info.person.name (@info.person.birth)</h3>
+    <div class="flex-container-row">
+        @if (@info.directedMovies.Count > 0)
+        {
+            <div class="50-pct">
+                <h4>Directed:</h4>
+                <ul>
+                    @foreach (var directedMovie in @info.directedMovies)
+                    {
+                        <li><a href="/movie?movieId=@directedMovie.id.ToString("D7")">@directedMovie.title (@directedMovie.year)</a></li>
+                    }
+                </ul>    
+            </div>
+        }
 
-<h3>@info.person.name (@info.person.birth)</h3>
-<div class="flex-container-row">
-    @if (@info.directedMovies.Count > 0)
-    {
-        <div class="50-pct">
-            <h4>Directed:</h4>
-            <ul>
-                @foreach (var directedMovie in @info.directedMovies)
-                {
-                    <li><a href="/movie?movieId=@directedMovie.id.ToString("D7")">@directedMovie.title (@directedMovie.year)</a></li>
-                }
-            </ul>    
-        </div>
-    }
-
-    @if(@info.starredMovies.Count > 0){
-        <div class="50-pct">
-            <h4>Starred in:</h4>
-            <ul>
-                @foreach (var starMovie in @info.starredMovies)
-                {
-                    <li><a href="/movie?movieId=@starMovie.id.ToString("D7")">@starMovie.title (@starMovie.year)</a></li>
-                }
-            </ul>
-        </div>
-    }
-</div>
+        @if(@info.starredMovies.Count > 0){
+            <div class="50-pct">
+                <h4>Starred in:</h4>
+                <ul>
+                    @foreach (var starMovie in @info.starredMovies)
+                    {
+                        <li><a href="/movie?movieId=@starMovie.id.ToString("D7")">@starMovie.title (@starMovie.year)</a></li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+    
+}
 @code {
     [Parameter]public string personId { get; set; }
-    PersonPageInfo info;
+    [AllowNull]PersonPageInfo info;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        info = movieController.getPersonPageInfo(Convert.ToInt32(personId));
+        info = null;
+        await Task.Run(() =>
+        {
+            info = movieController.getPersonPageInfo(Convert.ToInt32(personId));
+        });
     }
 
 }
