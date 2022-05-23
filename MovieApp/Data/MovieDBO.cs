@@ -39,11 +39,9 @@ public class MovieDBO
         NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
         queryString.Add("i", movieId);
         queryString.Add("apikey", OMDBApiKey);
-        Console.WriteLine("About to wait lol");
         HttpResponseMessage response = client.GetAsync("?" + queryString.ToString()).Result;
         if (response.IsSuccessStatusCode)
         {
-            Console.WriteLine(response.StatusCode);
             String omdbMovieString = response.Content.ReadAsStringAsync().Result;
             movie = JsonSerializer.Deserialize<OMDBMovie>(omdbMovieString);
         }
@@ -54,77 +52,23 @@ public class MovieDBO
         return movie;
     }
 
-    public async Task<List<Person>> getMovieActorsFromDB(OMDBMovie omdbMovie)
+    public async Task<List<Person>> getMovieActorsFromDB(String movieId)
     {
-        List<Person> persons = new List<Person>();
-        /*String sqlList = "";
-        int count = persons.Count;
-        foreach (var i in persons)
-        {
-            if (count == 1)
-            {
-                sqlList += $"'{i.Name}'";
-                count--;
-            }
-            else
-            {
-                sqlList += $"'{i.Name}', ";
-                count--;
-            }
-       
-            
-        }*/
-        foreach (var actor in omdbMovie.Actors.Split(", ").ToList())
-        {
-            String sql = $"SELECT * from people where people.name = '{actor}'";
-          await using var cmd = new MySqlCommand(sql, databaseConnection);
-           await using MySqlDataReader rdr = cmd.ExecuteReader();
-            while (rdr.Read())
-            {
-                Person person = new Person();
-                if (Convert.ToInt32(rdr["id"]) > 0)
-                {
-                    person.name = Convert.ToString(rdr["name"]);
-                    person.id = Convert.ToInt32(rdr["id"]);
-                    person.birth = Convert.ToInt32(rdr["birth"]);
-                    person.isDirector = false;
-                    person.isInDB = true;
-                }
-                else
-                {
-                    person.name = actor;
-                    person.isInDB = false;
-                }
+        using var httpClient = new HttpClient();
+        movieId = movieId.Remove(0, 2);
+        HttpResponseMessage responseMessage = httpClient.GetAsync($"https://europe-west1-sep6-movie-service.cloudfunctions.net/getActorsForMovie?movieId={movieId}").Result;
 
-                persons.Add(person);
-            }
-            rdr.Close();
-        }
-        String sqlDirector = $"SELECT * from people where people.name = '{omdbMovie.Director}'";
-       await using var cmd2 = new MySqlCommand(sqlDirector, databaseConnection);
-       await using MySqlDataReader rdr2 = cmd2.ExecuteReader();
-        while (rdr2.Read())
+        List<Person> actorsList = new List<Person>();
+        if (responseMessage.IsSuccessStatusCode)
         {
-            Person person = new Person();
-            if (Convert.ToInt32(rdr2["id"]) == 0)
-            {
-                person.name = Convert.ToString(rdr2["name"]);
-                person.id = Convert.ToInt32(rdr2["id"]);
-                person.birth = Convert.ToInt16(rdr2["birth"]);
-                person.isDirector = false;
-                person.isInDB = true;
-            }
-            else
-            {
-                person.name = omdbMovie.Director;
-                person.isInDB = false;
-            }
-
-            persons.Add(person);
-            
+            string res = responseMessage.Content.ReadAsStringAsync().Result;
+            actorsList = JsonSerializer.Deserialize<List<Person>>(res);
         }
-        rdr2.Close();
-        return persons;
+        else
+        {
+            Console.WriteLine(responseMessage.StatusCode);
+        }
+        return actorsList;
     }
 
     public async Task<PersonPageInfo> getPersonPageInfo(int personId)

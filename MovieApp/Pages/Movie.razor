@@ -5,62 +5,61 @@
 <head>
     <title>Movie</title>
 </head>
-<body>
-<div class="background-container" style="">
-    <div class="sub-container">
-        <div class="content-box movie-left">
-            <p class="movie-title">@movieCache.Title (@movieCache.Year)</p>
-            <p>@movieCache.imdbRating★ (@movieCache.imdbVotes)</p>
-            <img class="poster" alt="Poster Image" src="@movieCache.Poster"/>
-        </div>
-        <div class="sub-container">
-            <div class="content-box" style="width: 100%">
-                <p>Country | @movieCache.Country</p>
-                <p>Director | 
-                    @if (directorCache.birth == 0)
-                    {
-                        @if (directorCache.isInDB)
-                        {
-                           <a>@directorCache.name @directorCache.birth</a> 
-                        }
-                        else
-                        {
-                            @movieCache.Director
-                        }
-                    }
-                    </p>
-                <p>Writer | @movieCache.Writer</p>
-                <p>Synopsis</p>
-                <p>@movieCache.Plot</p>
-            </div>
-             <div class="content-box" style="width: 100%;">
-                                <p class="actor-list-title">Starring actors</p>
-                 <ul class="actor-list">
-                     @if (!actorCache.Any())
-                     {
-                         <li>Loading Data...</li>
-                     }
-                     else
-                     {
-                         @foreach (var i in actorCache)
-                         {
-                             if (i.isInDB)
-                             {
-                                 <li><a href="../person/@i.id">@i.name (@i.birth)</a></li>
-                             }
-                             else
-                             {
-                                 <li>@i.name</li>
-                             }
-                         }
-                         }
-                 </ul>
-                            </div>
-        </div>
-    </div>
-</div>
-</body>
 
+@if (movieCache == null)
+{
+    <body>
+     <div class="spinner"> <img src="img/loading.gif"/></div>
+    </body>
+}
+else
+{
+    <body>
+  <div class="background-container" style="">
+      <div class="sub-container">
+          <div class="content-box movie-left">
+              <p class="movie-title">@movieCache.Title (@movieCache.Year)</p>
+              <p>@movieCache.imdbRating★ (@movieCache.imdbVotes)</p>
+              <img class="poster" alt="Poster Image" src="@movieCache.Poster"/>
+          </div>
+          <div class="sub-container">
+              <div class="content-box" style="width: 100%">
+                  <p>Country | @movieCache.Country</p>
+                  <p>Director |
+                      @movieCache.Director
+                  </p>
+                  <p>Writer | @movieCache.Writer</p>
+                  <p>Synopsis</p>
+                  <p>@movieCache.Plot</p>
+              </div>
+              <div class="content-box" style="width: 100%;">
+                  <p class="actor-list-title">Starring actors</p>
+                  <ul class="actor-list">
+                      @if (!actorCache.Any())
+                      {
+                          <li>Loading Data...</li>
+                      }
+                      else
+                      {
+                          @foreach (var i in actorCache)
+                          {
+                              if (i.isInDB)
+                              {
+                                  <li><a href="../person/@i.id">@i.name (@i.birth)</a></li>
+                              }
+                              else
+                              {
+                                  <li>@i.name</li>
+                              }
+                          }
+                      }
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+  </body>  
+}
 @code
 {
     [Parameter]
@@ -81,7 +80,7 @@
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        checkActorsInDB(movieCache);
+        checkActorsInDB(movieId);
         return base.OnAfterRenderAsync(firstRender);
     }
 
@@ -92,10 +91,9 @@
         StateHasChanged();
     }
 
-    public async Task checkActorsInDB(OMDBMovie omdbMovie)
+    public async Task checkActorsInDB(String movieId)
     {
-        actorCache = movieController.checkActors(omdbMovie).FindAll(i => i.isDirector == false);
-        //directorCache = movieController.checkActors(omdbMovie).Find(i => i.isDirector);
+        actorCache = movieController.checkActors(movieId);
         this.StateHasChanged();
     }
 

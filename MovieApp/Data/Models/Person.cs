@@ -8,7 +8,8 @@ public class Person
 {
     [NotNull] public int id { get; set; }
     [NotNull] public string name { get; set; }
-    [AllowNull] public int birth { get; set; }
-    [AllowNull] public bool isDirector { get; set; }
-    [AllowNull] public bool isInDB { get; set; }
+    [AllowNull] public int? birth { get; set; }
+   // [AllowNull] public bool isDirector { get; set; }
+    
+    [AllowNull] public bool isInDB = true;
 }
