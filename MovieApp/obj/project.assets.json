@@ -107,6 +107,15 @@
           "lib/net6.0/ZstdNet.dll": {}
         }
       },
+      "Newtonsoft.Json/13.0.2-beta1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {}
+        }
+      },
       "System.Buffers/4.5.1": {
         "type": "package",
         "compile": {
@@ -460,6 +469,36 @@
         "lib/netstandard2.1/ZstdNet.dll",
         "mysql.data.8.0.29.nupkg.sha512",
         "mysql.data.nuspec"
+      ]
+    },
+    "Newtonsoft.Json/13.0.2-beta1": {
+      "sha512": "lrHT3bmqM13QHvgtj2Y30BCRsq6lX07klW5tScx2B7ihqWeG6aVXrHxVALN34+boed9ybVtlRFLOuKD44Xuttg==",
+      "type": "package",
+      "path": "newtonsoft.json/13.0.2-beta1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "README.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/net6.0/Newtonsoft.Json.dll",
+        "lib/net6.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "newtonsoft.json.13.0.2-beta1.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
       ]
     },
     "System.Buffers/4.5.1": {
@@ -848,28 +887,36 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "MySql.Data >= 8.0.29"
+      "MySql.Data >= 8.0.29",
+      "Newtonsoft.Json >= 13.0.2-beta1"
     ]
   },
   "packageFolders": {
-    "/Users/danmosk/.nuget/packages/": {}
+    "C:\\Users\\mundu\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/MovieApp.csproj",
+      "projectUniqueName": "C:\\Users\\mundu\\OneDrive\\Software Personal Project\\Clicker Game\\SEP6-Movie-Service\\MovieApp\\MovieApp.csproj",
       "projectName": "MovieApp",
-      "projectPath": "/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/MovieApp.csproj",
-      "packagesPath": "/Users/danmosk/.nuget/packages/",
-      "outputPath": "/Users/danmosk/Desktop/IT/VIA/SEP6/SEP6-Movie-Service/MovieApp/obj/",
+      "projectPath": "C:\\Users\\mundu\\OneDrive\\Software Personal Project\\Clicker Game\\SEP6-Movie-Service\\MovieApp\\MovieApp.csproj",
+      "packagesPath": "C:\\Users\\mundu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mundu\\OneDrive\\Software Personal Project\\Clicker Game\\SEP6-Movie-Service\\MovieApp\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/danmosk/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\mundu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -891,6 +938,10 @@
           "MySql.Data": {
             "target": "Package",
             "version": "[8.0.29, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.2-beta1, )"
           }
         },
         "imports": [
@@ -911,7 +962,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/Users/danmosk/.dotnet/sdk/6.0.202/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

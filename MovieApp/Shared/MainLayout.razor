@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
 
 <PageTitle>MovieApp</PageTitle>
 
@@ -9,6 +11,9 @@
 
     <main>
         <div class="top-row px-4">
+            <AuthorizeView>
+                <a>You are now logged in.</a>
+            </AuthorizeView>
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
 

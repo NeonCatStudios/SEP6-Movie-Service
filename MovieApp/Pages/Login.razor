@@ -1,0 +1,41 @@
+﻿@page "/login/"
+@namespace LoginComponent
+@using MovieApp.Authentication
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager navigation;
+@inject IJSRuntime JsRuntime;
+
+<div class="loginForm">
+    <AuthorizeView>
+        <NotAuthorized>
+            <label>Username</label>
+            <input type="text" @bind="username"/>
+            <label>Password</label>
+            <input type="password" @bind="password"/>
+            <label>@errorMessage</label>
+             <button @onclick="@TryLogin" class="LoginButton">Login</button>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+@code {
+    public String username;
+    public String password;
+    public String errorMessage;
+
+    public async Task TryLogin()
+    {
+        errorMessage = "";
+        try
+        {
+            await ((AuthenticationProvider) AuthenticationStateProvider).ValidateLogin(username, password);
+            navigation.NavigateTo("");
+
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
+        password = "";
+    }
+}

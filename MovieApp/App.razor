@@ -1,7 +1,13 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@using LoginRedirectComponent
+<CascadingAuthenticationState>
+<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
-        <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
+        <AuthorizeRouteView  RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+            <NotAuthorized>
+                <LoginRedirect/>
+            </NotAuthorized>
+        </AuthorizeRouteView>
+          <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
@@ -10,3 +16,4 @@
         </LayoutView>
     </NotFound>
 </Router>
+</CascadingAuthenticationState>

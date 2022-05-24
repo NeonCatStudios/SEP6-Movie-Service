@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+
+using Microsoft.AspNetCore.Components.Authorization;
+using MovieApp.Authentication;
 using MovieApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<MovieController>();
-
+builder.Services.AddSingleton<AccountService>();
+builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProvider>();
+builder.Services.AddAuthorizationCore();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

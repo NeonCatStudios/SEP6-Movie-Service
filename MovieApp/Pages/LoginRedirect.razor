@@ -1,0 +1,11 @@
+﻿@namespace LoginRedirectComponent
+@inject NavigationManager navigation
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        navigation.NavigateTo("login");
+    }
+
+}
