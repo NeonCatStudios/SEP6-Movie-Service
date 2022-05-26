@@ -12,7 +12,14 @@
 .content-box .movie-left{
     width: 30%;
 }
+.text-gradient{
 
+    background: rgb(34,193,195);
+    background: linear-gradient(90deg, rgba(34,193,195,1) 0%, rgba(21,212,181,1) 52%, rgba(45,87,253,1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px #333);
+}
 .background-container{
     flex: 1 0 10%;
     justify-content: center;
@@ -23,7 +30,6 @@
     border-radius: 15px;
 }
 .poster{
-    background-image: url("https://www.ubuy.com/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvNzFaSU91V2pDcEwuX0FDX1NMMTAwMF8uanBn.jpg");
     align-self: center;
     -webkit-box-shadow: 0px 0px 24px -7px #000000;
     box-shadow: 0px 0px 24px -7px #000000;

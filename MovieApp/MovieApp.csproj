@@ -13,7 +13,6 @@
     <None Include="Dockerfile" CopyToOutputDirectory="Always" />
 </ItemGroup>
 <ItemGroup>
-  <Folder Include="Pages\Auth" />
   <Folder Include="release" />
 </ItemGroup>
 <ItemGroup>
