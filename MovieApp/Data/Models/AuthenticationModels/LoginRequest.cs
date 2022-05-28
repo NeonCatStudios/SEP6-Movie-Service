@@ -5,9 +5,10 @@ namespace MovieApp.Data.Models.AuthenticationModels
     public class LoginRequest
     {
         [Required]
-        public string Username { get; set; }
+        public string email { get; set; }
         [Required]
-        public string Password { get; set; }
-        public bool RememberMe { get; set;  }
+        public string password { get; set; }
+        
+        public bool returnSecureToken { get; set; }
     }
 }

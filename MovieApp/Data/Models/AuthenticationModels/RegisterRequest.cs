@@ -5,11 +5,11 @@ namespace MovieApp.Data.Models.AuthenticationModels
     public class RegisterRequest
     {
         [Required]
-        public string UserName { get; set; }
+        public string email { get; set; }
         [Required]
-        public string Password { get; set; }
-        [Required]
-        [Compare(nameof(Password), ErrorMessage = "Passwords do not match")]
-        public string PasswordConfirm { get; set; }
+        public string password { get; set; }
+        [Required] 
+        public bool returnSecureToken { get; set; }
+       
     }
 }

@@ -3,32 +3,39 @@
 @using MovieApp.Authentication
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager navigation;
-@inject IJSRuntime JsRuntime;
+
 
 <div class="loginForm">
     <AuthorizeView>
         <NotAuthorized>
-            <label>Username</label>
-            <input type="text" @bind="username"/>
+            <label>Email</label>
+            <input type="text" @bind="email"/>
             <label>Password</label>
             <input type="password" @bind="password"/>
             <label>@errorMessage</label>
-             <button @onclick="@TryLogin" class="LoginButton">Login</button>
+            <button @onclick="@TryLogin" class="LoginButton">Login</button>
+            <button @onclick="@Register" class="LoginButton">Register</button>
+            <button @onclick="@ResetPassword" class="LoginButton">Reset Password</button>
+            @if (isSuccessRegister)
+            {
+                <p style="color: lightgreen">You have succesfully registered and now can log in.</p>
+            }
         </NotAuthorized>
     </AuthorizeView>
 </div>
 
 @code {
-    public String username;
+    public String email;
     public String password;
     public String errorMessage;
+    public bool isSuccessRegister;
 
     public async Task TryLogin()
     {
         errorMessage = "";
         try
         {
-            await ((AuthenticationProvider) AuthenticationStateProvider).ValidateLogin(username, password);
+            await ((AuthenticationProvider)AuthenticationStateProvider).ValidateLogin(email, password);
             navigation.NavigateTo("");
 
         }
@@ -37,5 +44,28 @@
             errorMessage = e.Message;
         }
         password = "";
+    }
+
+    public async Task Register()
+    {
+        errorMessage = "";
+        try
+        {
+            isSuccessRegister = ((AuthenticationProvider)AuthenticationStateProvider).RegisterUser(email, password);
+
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
+        password = "";
+    }
+
+    public async Task ResetPassword()
+    {
+        if (((AuthenticationProvider)AuthenticationStateProvider).resetPassword(email))
+        {
+            errorMessage = "Password reset email sent, if user exist.";
+        }
     }
 }

@@ -1,6 +1,7 @@
-﻿@inherits LayoutComponentBase
-@using System.Security.Claims
-@using Microsoft.AspNetCore.Components.Authorization
+﻿@using MovieApp.Authentication
+@inherits LayoutComponentBase
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager navigation;
 
 <PageTitle>Movies</PageTitle>
 
@@ -12,8 +13,16 @@
     <main>
         <div class="top-row px-4">
             <AuthorizeView>
-                <a>You are now logged in.</a>
+                <NotAuthorized>
+                    <button @onclick="GoToLogin">Log In</button>
+                </NotAuthorized>
+                <Authorized>
+                    <p>You are now logged in.</p>
+                    <button @onclick="LogOut">Log Out</button>
+                </Authorized>
             </AuthorizeView>
+            <NotAuthorized>
+            </NotAuthorized>
         </div>
 
         <article class="content px-4">
@@ -21,3 +30,14 @@
         </article>
     </main>
 </div>
+@code{
+    void GoToLogin()
+    {
+        navigation.NavigateTo("login");
+    }
+
+    void LogOut()
+    {
+        ((AuthenticationProvider)AuthenticationStateProvider).Logout();
+    }
+}

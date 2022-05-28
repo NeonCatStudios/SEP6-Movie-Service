@@ -43,18 +43,22 @@ namespace MovieApp.Authentication
             return await Task.FromResult(new AuthenticationState(cachedClaimsPrincipal));
         }
 
-        public async Task ValidateLogin(string username, string password)
+        public async Task ValidateLogin(string email, string password)
         {
-            if (string.IsNullOrEmpty(username)) throw new Exception("Enter username");
+            if (string.IsNullOrEmpty(email)) throw new Exception("Enter email");
             if (string.IsNullOrEmpty(password)) throw new Exception("Enter password");
             ClaimsIdentity identity = new ClaimsIdentity();
             try
             {
                 LoginRequest loginRequest = new LoginRequest();
-                loginRequest.Username = username;
-                loginRequest.Password = password;
-                
-                CachedUser user = await accountService.Login(loginRequest);
+                loginRequest.email = email;
+                loginRequest.password = password;
+
+                FirebaseUser firebaseUser = await accountService.Login(loginRequest);
+                CachedUser user = new CachedUser();
+                user.UserId = firebaseUser.localId;
+                user.email = firebaseUser.email;
+                user.Token = firebaseUser.idToken;
                 identity = SetupClaimsForUser(user);
                 string serialisedData = JsonSerializer.Serialize(user);
                 await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
@@ -62,7 +66,7 @@ namespace MovieApp.Authentication
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw new Exception("Incorrect Email/Password");
             }
 
             NotifyAuthenticationStateChanged(
@@ -77,6 +81,15 @@ namespace MovieApp.Authentication
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
 
+        public Boolean RegisterUser(String email, String password)
+        {
+            RegisterRequest request = new RegisterRequest();
+            request.email = email;
+            request.password = password;
+            request.returnSecureToken = true;
+            return accountService.Register(request);
+        }
+
         private ClaimsIdentity SetupClaimsForUser(CachedUser user)
         {
             List<Claim> claims = new List<Claim>();
@@ -84,6 +97,16 @@ namespace MovieApp.Authentication
             ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;
         }
-        
+
+        public CachedUser getUser()
+        {
+            return cachedUser;
+        }
+
+        public Boolean resetPassword(String email)
+        {
+            return accountService.ResetPassword(email);
+        }
+
     }
 }
