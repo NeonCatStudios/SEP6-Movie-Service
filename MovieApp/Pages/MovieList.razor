@@ -6,6 +6,7 @@
 @inject MovieController MovieController;
 @inject NavigationManager NavManager;
 
+
 <PageTitle>Movie List</PageTitle>
 
 <h1>Movie List</h1>
@@ -25,6 +26,8 @@ else
         <MovieListItem Title="@item.title" Year="@item.year" Rating="@item.rating" Votes="@item.votes" ApiId="@apiId" />
     }
 }
+<span><button @onclick="@Back" class="BackButton">Back</button><label>...@Page...</label><button @onclick="@Next" class="NextButton">Next</button></span>
+
 
 @code {
     [AllowNull]public List<Data.Movie> Movies = null;
@@ -48,4 +51,20 @@ else
         await Task.Run(() => { Movies = MovieController.getMovies(page: Page, title: MovieTitleQuery); 
         });
     }
+    
+    protected async Task Back()
+    {
+        if (Page > 1)
+        {
+            Page--;
+            await OnInitializedAsync();
+        }
+    }
+
+    protected async Task Next()
+    {
+        Page++;
+        await OnInitializedAsync();
+    }
+
 }

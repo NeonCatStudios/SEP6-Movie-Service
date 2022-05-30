@@ -6,4 +6,8 @@ public static class Utils
     {
         return year > 0 ? $"({year})" : "";
     }
+    public static string BirthFilter(int? birth)
+    {
+        return birth > 0 ? $"({birth})" : "";
+    }
 }

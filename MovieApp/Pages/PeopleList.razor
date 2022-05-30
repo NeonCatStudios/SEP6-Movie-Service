@@ -1,34 +1,36 @@
-@page "/movieList"
-@page "/"
+@page "/peopleList"
 @using MovieApp.Data;
 @using System.Diagnostics.CodeAnalysis
 @using Microsoft.AspNetCore.WebUtilities
-@inject MovieController MovieController;
+@inject PeopleController PeopleController;
 @inject NavigationManager NavManager;
 
-<PageTitle>Movie List</PageTitle>
+<PageTitle>People List</PageTitle>
 
-<h1>Movie List</h1>
-<form method="get" action="/movieList">
+<h1>People List</h1>
+@*<form method="get" action="/peopleList">
     <input name="title" type="text"/>
     <button>Search</button>
-</form>
-@if (Movies == null)
+</form>*@
+@if (People == null)
 {
     <div class="spinner"> <img src="img/loading.gif"/></div>
 }
 else
 {
-    @foreach (var item in Movies)
+    @foreach (var item in People)
     {
         var apiId = @item.id.ToString("D7");
-        <MovieListItem Title="@item.title" Year="@item.year" Rating="@item.rating" Votes="@item.votes" ApiId="@apiId" />
+        <PeopleListItem Name="@item.name" Birth="@item.birth" ApiId="@apiId" />
     }
 }
+<span><button @onclick="@Back" class="BackButton">Back</button><label>...@Page...</label><button @onclick="@Next" class="NextButton">Next</button></span>
+
+
 
 @code {
-    [AllowNull]public List<Data.Movie> Movies = null;
-    public string MovieTitleQuery;
+    [AllowNull]public List<Data.Person> People = null;
+    //public string MovieTitleQuery;
     public int Page = 1;
     
     protected override void OnInitialized()
@@ -36,16 +38,31 @@ else
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
         var query = QueryHelpers.ParseQuery(uri.Query);
         
-        if (query.TryGetValue("title", out var movieTitle)){ MovieTitleQuery = movieTitle; }
+       // if (query.TryGetValue("title", out var movieTitle)){ MovieTitleQuery = movieTitle; }
 
-        if (query.TryGetValue("page", out var page)){ Page = Convert.ToInt16(page); }
+        //if (query.TryGetValue("page", out var page)){ Page = Convert.ToInt16(page); }
 
     }
     
     protected override async Task OnInitializedAsync()
     {
-        Movies = null;
-        await Task.Run(() => { Movies = MovieController.getMovies(page: Page, title: MovieTitleQuery); 
+        People = null;
+        await Task.Run(() => { People = PeopleController.getPeople(page: Page); 
         });
+    }
+    
+    protected async Task Back()
+    {
+        if (Page > 1)
+        {
+            Page--;
+            await OnInitializedAsync();
+        }
+    }
+
+    protected async Task Next()
+    {
+        Page++;
+        await OnInitializedAsync();
     }
 }

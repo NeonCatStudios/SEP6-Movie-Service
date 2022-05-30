@@ -1,16 +1,13 @@
 @using MovieApp.Data
 <div>
-    <h3><a href = "movie/?movieId=@ApiId">@Title @Utils.YearFilter(@Year)</a></h3>
-    Rating: @Rating ⭐ (@Votes votes)
+    <h3><a href="../person/@ApiId">@Name @(Utils.BirthFilter(@Birth))</a></h3>
 </div>
 
 
 
 @code {
     [Parameter] public String ApiId { get; set; }
-    [Parameter] public String Title { get; set; }
-    [Parameter] public int Year { get; set; }
-    [Parameter] public float Rating { get; set; }
-    [Parameter] public int Votes { get; set; }
-    
+    [Parameter] public String Name { get; set; }
+    [Parameter] public int? Birth { get; set; }
+
 }

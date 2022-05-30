@@ -10,7 +10,6 @@ namespace MovieApp.Data;
     {
         starredMovies = new List<Movie>();
         directedMovies = new List<Movie>();
-
     }
 
 }

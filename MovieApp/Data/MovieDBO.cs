@@ -86,6 +86,24 @@ public class MovieDBO
 
     }
 
+    public async Task<double> getRatingForFilms(int personId)
+    {
+        using var httpClient = new HttpClient();
+        HttpResponseMessage responseMessage = httpClient.GetAsync($"https://europe-west1-sep6-movie-service.cloudfunctions.net/getAvgRating?actorId={personId}").Result;
+
+        AvgRating? result = new AvgRating();
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            string res = responseMessage.Content.ReadAsStringAsync().Result;
+            if (res.Length > 0)
+            {
+                result = JsonSerializer.Deserialize<AvgRating>(res);
+            }
+            Console.WriteLine(result);
+        }
+        return result.avgRating;
+    }
+
     public async Task<List<Movie>> GetMovies(int page, string title)
     {
         if (page <= 0)
@@ -109,6 +127,28 @@ public class MovieDBO
             Console.WriteLine(responseMessage);
             string result = responseMessage.Content.ReadAsStringAsync().Result;
             List<Movie> res = JsonSerializer.Deserialize<List<Movie>>(result);
+            return res;
+        }
+        return null;
+    }
+    public async Task<List<Person>> GetPeople(int page)
+    {
+        if (page <= 0)
+        {
+            page = 1;
+        }
+        int offset = (page - 1) * 50;
+        
+        string parameterString = $"offset={offset}";
+        
+        using var httpClient = new HttpClient();
+        HttpResponseMessage responseMessage = httpClient.GetAsync($"https://europe-west1-sep6-movie-service.cloudfunctions.net/getPeople-1?{parameterString}").Result;
+        
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            Console.WriteLine(responseMessage);
+            string result = responseMessage.Content.ReadAsStringAsync().Result;
+            List<Person> res = JsonSerializer.Deserialize<List<Person>>(result);
             return res;
         }
         return null;

@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<MovieController>();
+builder.Services.AddSingleton<PeopleController>();
 builder.Services.AddSingleton<AccountService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProvider>();
 builder.Services.AddAuthorizationCore();

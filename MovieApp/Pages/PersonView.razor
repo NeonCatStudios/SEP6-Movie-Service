@@ -35,18 +35,28 @@ else
             </div>
         }
     </div>
-    
+    @if (@info.starredMovies.Count > 0 || @rating>0 )
+    {
+        <br>
+        <div class="flex-container-row">
+            <h4>Average rating for movies starred in: @rating </h4>
+        </div>
+    }
+
 }
 @code {
     [Parameter]public string personId { get; set; }
     [AllowNull]PersonPageInfo info;
+    [AllowNull] double rating;
 
     protected override async Task OnInitializedAsync()
     {
         info = null;
+        rating = -1;
         await Task.Run(() =>
         {
             info = movieController.getPersonPageInfo(Convert.ToInt32(personId));
+            rating = movieController.getAvgRating(Convert.ToInt32(personId));
         });
     }
 
