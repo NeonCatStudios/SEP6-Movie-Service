@@ -1,6 +1,12 @@
 ﻿@page "/movie/"
 @using MovieApp.Data
+@using MovieApp.Authentication
+@using MovieApp.Data.Models.AuthenticationModels
+@using System.Text.Json
 @inject MovieController movieController
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime _jsRuntime;
+
 @attribute [Authorize]
 <head>
     <title>Movie</title>
@@ -18,7 +24,7 @@ else
   <div class="background-container" style="">
       <div class="sub-container">
           <div class="content-box movie-left">
-              <p class="movie-title">@movieCache.Title (@movieCache.Year)</p>
+              <p class="movie-title"><a style="cursor:pointer" onclick="@ToggleFav" >@heart</a> @movieCache.Title (@movieCache.Year)</p>
               <p>@movieCache.imdbRating★ (@movieCache.imdbVotes)</p>
               <img class="poster" alt="Poster Image" src="@movieCache.Poster"/>
           </div>
@@ -66,13 +72,34 @@ else
     [SupplyParameterFromQuery(Name = "movieId")]
     public String movieId { get; set; } = "";
 
+    public int movieIdInt;
+
     private List<Person> actorCache = new List<Person>();
     private String RatingString;
     private Person directorCache = new Person();
     public OMDBMovie movieCache = null;
+    public bool isFav = false;
+
+    public String heart;
+    CachedUser user;
 
     protected override async Task OnInitializedAsync()
     {
+        movieIdInt = Int32.Parse(movieId);
+
+        user = ((AuthenticationProvider)AuthenticationStateProvider).getUser();
+
+        if (user != null)
+        {
+            isFav = user.favList.contains( movieIdInt );
+        }
+        else
+        {
+            isFav = false;
+        }
+        
+        heart = isFav ? "❤" : "♡";
+        
         directorCache.birth = 0;
         movieId = "tt" + movieId ?? "";
         await InvokeAsync(() =>
@@ -80,6 +107,26 @@ else
             GetMovieInfo(movieId);
             StateHasChanged();
         });
+    }
+
+    public async void ToggleFav()
+    {
+        if (user != null)
+        {
+            if (isFav)
+            {
+                movieController.RemoveFromFav(user, movieIdInt);
+            }
+            else
+            {
+                bool added = await movieController.AddToFav(user, movieIdInt);
+                if (added)
+                {
+                    isFav = true;  
+                }
+            }
+            heart = isFav ? "❤" : "♡";
+        }
     }
 
     protected override Task OnAfterRenderAsync(bool firstRender)

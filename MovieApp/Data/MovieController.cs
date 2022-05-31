@@ -1,12 +1,24 @@
-﻿namespace MovieApp.Data;
+﻿using Microsoft.JSInterop;
+using MovieApp.Data.Models.AuthenticationModels;
+using Newtonsoft.Json;
+
+namespace MovieApp.Data;
 
 public class MovieController
 {
     private MovieDBO _movieDbo;
+    private readonly IJSRuntime jsRuntime;
+    private List<Movie> _favList;
 
     public MovieController()
     {
         _movieDbo = new MovieDBO();
+        _favList = new List<Movie>();
+    }
+
+    public async Task<List<Movie>> GetFavListByUserId(string userId)
+    {
+        return await _movieDbo.GetFavListByUserId(userId);
     }
 
     public async Task<OMDBMovie> getMovies(String movieId)
@@ -32,5 +44,15 @@ public class MovieController
     public double getAvgRating(int personId)
     {
         return _movieDbo.getRatingForFilms(personId).Result;
+    }
+
+    public void RemoveFromFav(CachedUser user, int movieId)
+    {
+        _movieDbo.RemoveFromFav(user, movieId);
+    }
+
+    public async Task<bool> AddToFav(CachedUser user, int movieId)
+    {
+        return await _movieDbo.AddToFav(user, movieId);
     }
 }

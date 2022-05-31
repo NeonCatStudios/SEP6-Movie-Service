@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using Microsoft.CSharp.RuntimeBinder;
+using MovieApp.Data.Models.AuthenticationModels;
 using MySql.Data.MySqlClient;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -152,5 +153,50 @@ public class MovieDBO
             return res;
         }
         return null;
+    }
+
+    public async Task<List<Movie>> GetFavListByUserId(string userId)
+    {
+        var url = "https://europe-west1-sep6-movie-service.cloudfunctions.net/getFavListForUser";
+        using var httpClient = new HttpClient();
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data.Add("user_id", userId);
+        HttpResponseMessage responseMessage = await httpClient.PostAsync(url, new FormUrlEncodedContent(data));
+
+        List<Movie> res = new List<Movie>();
+        
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            string result = responseMessage.Content.ReadAsStringAsync().Result;
+            res = JsonSerializer.Deserialize<List<Movie>>(result);
+        }
+
+        return res;
+    }
+
+    public async void RemoveFromFav(CachedUser user, int movieId)
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public async Task<bool> AddToFav(CachedUser user, int movieId)
+    {
+        string url = "https://europe-west1-sep6-movie-service.cloudfunctions.net/addFavListForUser";
+        
+        using var httpClient = new HttpClient();
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data.Add("user_id", user.UserId);
+        data.Add("movie_id", movieId+"");
+        data.Add("token", user.Token);
+        HttpResponseMessage responseMessage = await httpClient.PostAsync(url, new FormUrlEncodedContent(data));
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            return true;
+        }
+        else
+        {
+            throw new Exception("AddToFav went wrong");
+        }
     }
 }

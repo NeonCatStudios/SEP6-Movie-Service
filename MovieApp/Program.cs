@@ -12,6 +12,7 @@ builder.Services.AddSingleton<MovieController>();
 builder.Services.AddSingleton<PeopleController>();
 builder.Services.AddSingleton<AccountService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProvider>();
+
 builder.Services.AddAuthorizationCore();
 var app = builder.Build();
 

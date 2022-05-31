@@ -1,6 +1,7 @@
 ﻿
 using System.Security.Claims;
 using System.Text.Json;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using MovieApp.Data;
@@ -14,27 +15,37 @@ namespace MovieApp.Authentication
         private readonly IJSRuntime jsRuntime;
         private readonly AccountService accountService;
 
-        private CachedUser cachedUser;
+        private static CachedUser cachedUser;
 
-        public AuthenticationProvider(IJSRuntime jsRuntime, AccountService accountService)
+        [Inject] private MovieController _movieController { get; set; }
+
+        public AuthenticationProvider(IJSRuntime jsRuntime, AccountService accountService, MovieController movieController)
         {
             this.jsRuntime = jsRuntime;
             this.accountService = accountService;
+            _movieController = movieController;
         }
 
-        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+        public async Task<CachedUser> GetUserFromCache()
+        {
+            string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+            if (!string.IsNullOrEmpty(userAsJson))
+            {
+                return JsonSerializer.Deserialize<CachedUser>(userAsJson);
+            }
+
+            return null;
+        }
+
+    public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             ClaimsIdentity identity = new ClaimsIdentity();
             if (cachedUser == null)
             {
-                string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
-                if (!string.IsNullOrEmpty(userAsJson))
-                {
-                    cachedUser = JsonSerializer.Deserialize<CachedUser>(userAsJson);
-                    identity = SetupClaimsForUser(cachedUser);
-                }
+                cachedUser = await GetUserFromCache();
             }
-            else
+            
+            if (cachedUser != null)
             {
                 identity = SetupClaimsForUser(cachedUser);
             }
@@ -48,6 +59,8 @@ namespace MovieApp.Authentication
             if (string.IsNullOrEmpty(email)) throw new Exception("Enter email");
             if (string.IsNullOrEmpty(password)) throw new Exception("Enter password");
             ClaimsIdentity identity = new ClaimsIdentity();
+            CachedUser user = new CachedUser();
+            
             try
             {
                 LoginRequest loginRequest = new LoginRequest();
@@ -55,20 +68,26 @@ namespace MovieApp.Authentication
                 loginRequest.password = password;
 
                 FirebaseUser firebaseUser = await accountService.Login(loginRequest);
-                CachedUser user = new CachedUser();
+                
                 user.UserId = firebaseUser.localId;
                 user.email = firebaseUser.email;
                 user.Token = firebaseUser.idToken;
                 identity = SetupClaimsForUser(user);
-                string serialisedData = JsonSerializer.Serialize(user);
-                await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
-                cachedUser = user;
             }
             catch (Exception e)
             {
                 throw new Exception("Incorrect Email/Password");
             }
+            
+            string serialisedData = JsonSerializer.Serialize(user);
+            await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
+            cachedUser = user;
 
+            List<Movie> favorites = await _movieController.GetFavListByUserId(cachedUser.UserId);
+
+            cachedUser.favList = new FavList(favorites);
+
+            
             NotifyAuthenticationStateChanged(
                 Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity))));
         }
