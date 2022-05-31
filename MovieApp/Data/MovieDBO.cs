@@ -174,9 +174,24 @@ public class MovieDBO
         return res;
     }
 
-    public async void RemoveFromFav(CachedUser user, int movieId)
+    public async Task<bool> RemoveFromFav(CachedUser user, int movieId)
     {
-        throw new NotImplementedException();
+        string url = "https://europe-west1-sep6-movie-service.cloudfunctions.net/removeFavListForUser";
+        
+        using var httpClient = new HttpClient();
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data.Add("user_id", user.UserId);
+        data.Add("movie_id", movieId+"");
+        data.Add("token", user.Token);
+        HttpResponseMessage responseMessage = await httpClient.PostAsync(url, new FormUrlEncodedContent(data));
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            return true;
+        }
+        else
+        {
+            throw new Exception("AddToFav went wrong");
+        }
     }
 
 

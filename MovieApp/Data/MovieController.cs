@@ -46,9 +46,9 @@ public class MovieController
         return _movieDbo.getRatingForFilms(personId).Result;
     }
 
-    public void RemoveFromFav(CachedUser user, int movieId)
+    public async Task<bool> RemoveFromFav(CachedUser user, int movieId)
     {
-        _movieDbo.RemoveFromFav(user, movieId);
+        return await _movieDbo.RemoveFromFav(user, movieId);
     }
 
     public async Task<bool> AddToFav(CachedUser user, int movieId)

@@ -115,7 +115,11 @@ else
         {
             if (isFav)
             {
-                movieController.RemoveFromFav(user, movieIdInt);
+                bool removed = await movieController.RemoveFromFav(user, movieIdInt);
+                if (removed)
+                {
+                    isFav = false;
+                }
             }
             else
             {
