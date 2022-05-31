@@ -132,7 +132,7 @@ public class MovieDBO
         }
         return null;
     }
-    public async Task<List<Person>> GetPeople(int page)
+    public async Task<List<Person>> GetPeople(int page, string name)
     {
         if (page <= 0)
         {
@@ -141,6 +141,11 @@ public class MovieDBO
         int offset = (page - 1) * 50;
         
         string parameterString = $"offset={offset}";
+        
+        if (name != "" && name != null)
+        {
+            parameterString += "&name="+name;
+        }
         
         using var httpClient = new HttpClient();
         HttpResponseMessage responseMessage = httpClient.GetAsync($"https://europe-west1-sep6-movie-service.cloudfunctions.net/getPeople-1?{parameterString}").Result;

@@ -15,6 +15,10 @@
 }
 else
 {
+    <form method="get" action="/peopleList">
+        <input class="form-control w-50" name="name" type="text"/>
+        <button class="mt-2 btn btn-primary">Search</button>
+    </form>
     @foreach (var item in People)
     {
         var apiId = @item.id.ToString("D7");
@@ -29,13 +33,14 @@ else
     [AllowNull]public List<Data.Person> People = null;
     //public string MovieTitleQuery;
     public int Page = 1;
+    public string name = null;
     
     protected override void OnInitialized()
     {
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
         var query = QueryHelpers.ParseQuery(uri.Query);
         
-       // if (query.TryGetValue("title", out var movieTitle)){ MovieTitleQuery = movieTitle; }
+       if (query.TryGetValue("name", out var nameQuery)){ name = nameQuery; }
 
         //if (query.TryGetValue("page", out var page)){ Page = Convert.ToInt16(page); }
 
@@ -44,7 +49,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         People = null;
-        await Task.Run(() => { People = PeopleController.getPeople(page: Page); 
+        await Task.Run(() => { People = PeopleController.getPeople(page: Page, name: name); 
         });
     }
     

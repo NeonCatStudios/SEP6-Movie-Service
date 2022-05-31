@@ -9,8 +9,8 @@ public class PeopleController
         _movieDbo = new MovieDBO();
     }
 
-    public List<Person> getPeople(int page)
+    public List<Person> getPeople(int page, string name)
     {
-        return _movieDbo.GetPeople(page: page).Result;
+        return _movieDbo.GetPeople(page: page, name: name).Result;
     }
 }
