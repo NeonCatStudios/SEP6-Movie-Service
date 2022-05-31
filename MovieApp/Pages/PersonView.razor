@@ -8,41 +8,45 @@
 }
 else
 {
-    <h3>@info.person.name @Utils.YearFilter(@info.person.birth)</h3>
-    <div class="flex-container-row">
-        @if (@info.directedMovies.Count > 0)
-        {
-            <div class="50-pct">
-                <h4>Directed:</h4>
-                <ul>
-                    @foreach (var directedMovie in @info.directedMovies)
+    <div class="background-container">
+        <div class="content-box">
+            <h3 class="text-gradient">@info.person.name @Utils.YearFilter(@info.person.birth)</h3>
+                    <div class="flex-container-row">
+                        @if (@info.directedMovies.Count > 0)
+                        {
+                            <div class="50-pct">
+                                <h4>Directed:</h4>
+                                <ul>
+                                    @foreach (var directedMovie in @info.directedMovies)
+                                    {
+                                        <li><a href="/movie?movieId=@directedMovie.id.ToString("D7")">@directedMovie.title @Utils.YearFilter(@directedMovie.year)</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+            
+                        @if (@info.starredMovies.Count > 0)
+                        {
+                            <div class="50-pct">
+                                <h4>Starred in:</h4>
+                                <ul>
+                                    @foreach (var starMovie in @info.starredMovies)
+                                    {
+                                        <li><a href="/movie?movieId=@starMovie.id.ToString("D7")">@starMovie.title (@starMovie.year)</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                    @if (@info.starredMovies.Count > 0 || @rating > 0)
                     {
-                        <li><a href="/movie?movieId=@directedMovie.id.ToString("D7")">@directedMovie.title @Utils.YearFilter(@directedMovie.year)</a></li>
+                        <br>
+                        <div class="flex-container-row">
+                            <h4>Average rating for movies starred in: @rating </h4>
+                        </div>
                     }
-                </ul>    
-            </div>
-        }
-
-        @if(@info.starredMovies.Count > 0){
-            <div class="50-pct">
-                <h4>Starred in:</h4>
-                <ul>
-                    @foreach (var starMovie in @info.starredMovies)
-                    {
-                        <li><a href="/movie?movieId=@starMovie.id.ToString("D7")">@starMovie.title (@starMovie.year)</a></li>
-                    }
-                </ul>
-            </div>
-        }
-    </div>
-    @if (@info.starredMovies.Count > 0 || @rating>0 )
-    {
-        <br>
-        <div class="flex-container-row">
-            <h4>Average rating for movies starred in: @rating </h4>
         </div>
-    }
-
+    </div>
 }
 @code {
     [Parameter]public string personId { get; set; }

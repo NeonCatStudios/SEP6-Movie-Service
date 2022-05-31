@@ -9,10 +9,10 @@
 
 <PageTitle>Movie List</PageTitle>
 
-<h1>Movie List</h1>
+<h1 class="text-gradient">Movie List</h1>
 <form method="get" action="/movieList">
-    <input name="title" type="text"/>
-    <button>Search</button>
+    <input class="form-control w-50" name="title" type="text"/>
+    <button class="mt-2 btn btn-primary">Search</button>
 </form>
 @if (Movies == null)
 {
@@ -26,7 +26,7 @@ else
         <MovieListItem Title="@item.title" Year="@item.year" Rating="@item.rating" Votes="@item.votes" ApiId="@apiId" />
     }
 }
-<span><button @onclick="@Back" class="BackButton">Back</button><label>...@Page...</label><button @onclick="@Next" class="NextButton">Next</button></span>
+<span><button @onclick="@Back" class="btn btn-primary BackButton">Back</button><label>...@Page...</label><button @onclick="@Next" class="btn btn-primary NextButton">Next</button></span>
 
 
 @code {

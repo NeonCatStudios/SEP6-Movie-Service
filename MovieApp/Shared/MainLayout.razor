@@ -14,11 +14,11 @@
         <div class="top-row px-4">
             <AuthorizeView>
                 <NotAuthorized>
-                    <button @onclick="GoToLogin">Log In</button>
+                    <button class="btn btn-primary" @onclick="GoToLogin">Log In</button>
                 </NotAuthorized>
                 <Authorized>
                     <p>You are now logged in.</p>
-                    <button @onclick="LogOut">Log Out</button>
+                    <button class="btn btn-primary" @onclick="LogOut">Log Out</button>
                 </Authorized>
             </AuthorizeView>
             <NotAuthorized>

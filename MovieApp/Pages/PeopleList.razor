@@ -7,11 +7,8 @@
 
 <PageTitle>People List</PageTitle>
 
-<h1>People List</h1>
-@*<form method="get" action="/peopleList">
-    <input name="title" type="text"/>
-    <button>Search</button>
-</form>*@
+<h1 class="text-gradient">People List</h1>
+
 @if (People == null)
 {
     <div class="spinner"> <img src="img/loading.gif"/></div>
@@ -24,7 +21,7 @@ else
         <PeopleListItem Name="@item.name" Birth="@item.birth" ApiId="@apiId" />
     }
 }
-<span><button @onclick="@Back" class="BackButton">Back</button><label>...@Page...</label><button @onclick="@Next" class="NextButton">Next</button></span>
+<span><button @onclick="@Back" class="btn btn-primary BackButton">Back</button><label>...@Page...</label><button @onclick="@Next" class="btn btn-primary NextButton">Next</button></span>
 
 
 
