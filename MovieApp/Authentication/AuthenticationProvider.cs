@@ -15,7 +15,7 @@ namespace MovieApp.Authentication
         private readonly IJSRuntime jsRuntime;
         private readonly AccountService accountService;
 
-        private static CachedUser cachedUser;
+        private CachedUser cachedUser;
 
         [Inject] private MovieController _movieController { get; set; }
 
