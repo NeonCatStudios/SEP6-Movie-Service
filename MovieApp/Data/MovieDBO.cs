@@ -8,15 +8,15 @@ public class MovieDBO
 {
     private String OMDBApiKey = "7463b8f9";
     private String OMDBUrl = "http://www.omdbapi.com/";
-    static HttpClient client = new HttpClient();
 
     public MovieDBO()
     {
-        client.BaseAddress = new Uri(OMDBUrl);
     }
 
     public async Task<OMDBMovie> getMovieInfoJson(String movieId)
     {
+        HttpClient client = new HttpClient();
+        client.BaseAddress = new Uri(OMDBUrl);
         OMDBMovie movie = new OMDBMovie();
         NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
         queryString.Add("i", movieId);
