@@ -87,17 +87,6 @@ else
     {
         movieIdInt = Int32.Parse(movieId);
 
-        user = ((AuthenticationProvider)AuthenticationStateProvider).getUser();
-
-        if (user != null)
-        {
-            isFav = user.favList.contains( movieIdInt );
-        }
-        else
-        {
-            isFav = false;
-        }
-        
         heart = isFav ? "❤" : "♡";
         
         directorCache.birth = 0;

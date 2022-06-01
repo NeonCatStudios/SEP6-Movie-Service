@@ -7,10 +7,13 @@
 
 @attribute [Authorize]
 <h3>My Favorite Movies</h3>
-@foreach (Data.Movie movie in user.favList.favorites)
+@if (user != null)
 {
-    var apiId = @movie.id.ToString("D7");
-    <MovieListItem Title="@movie.title" Year="@movie.year" Rating="@movie.rating" Votes="@movie.votes" ApiId="@apiId" />
+    @foreach (Data.Movie movie in user.favList.favorites)
+    {
+        var apiId = @movie.id.ToString("D7");
+        <MovieListItem Title="@movie.title" Year="@movie.year" Rating="@movie.rating" Votes="@movie.votes" ApiId="@apiId" />
+    }
 }
 
 @code {
@@ -18,7 +21,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        user = ((AuthenticationProvider)AuthenticationStateProvider).getUser();
+        user = await ((AuthenticationProvider)AuthenticationStateProvider).GetUserFromCache();
         List<Data.Movie> favorites = await MovieController.GetFavListByUserId(user.UserId);
 
         user.favList = new FavList(favorites);

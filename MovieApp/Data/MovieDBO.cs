@@ -1,7 +1,5 @@
 ﻿using System.Collections.Specialized;
-using Microsoft.CSharp.RuntimeBinder;
 using MovieApp.Data.Models.AuthenticationModels;
-using MySql.Data.MySqlClient;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace MovieApp.Data;
@@ -12,25 +10,8 @@ public class MovieDBO
     private String OMDBUrl = "http://www.omdbapi.com/";
     static HttpClient client = new HttpClient();
 
-
-    //To be deleted, database stuff for actors, has to be replaced with cloud functions
-    private string databaseIP = "34.140.207.17";
-    private string DatabaseName = "movie";
-    private string usernameDatabase = "root";
-    private string databasePassword = "hellokitty123";
-
-    private MySqlConnection databaseConnection { get; set; }
-    private string ConnectionString { get; set; }
-
-    //-----------------------------------------------------------------------------------
     public MovieDBO()
     {
-        //---------------to be removed---------------
-        ConnectionString = string.Format("Server={0}; database={1}; UID={2}; password={3}", databaseIP,
-            DatabaseName, usernameDatabase, databasePassword);
-        databaseConnection = new MySqlConnection(ConnectionString);
-        databaseConnection.Open();
-        //----------------------------------------
         client.BaseAddress = new Uri(OMDBUrl);
     }
 
