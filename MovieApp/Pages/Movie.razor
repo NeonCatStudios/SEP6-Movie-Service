@@ -2,12 +2,9 @@
 @using MovieApp.Data
 @using MovieApp.Authentication
 @using MovieApp.Data.Models.AuthenticationModels
-@using System.Text.Json
 @inject MovieController movieController
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject IJSRuntime _jsRuntime;
 
-@attribute [Authorize]
 <head>
     <title>Movie</title>
 </head>
@@ -24,7 +21,14 @@ else
   <div class="background-container" style="">
       <div class="sub-container">
           <div class="content-box movie-left">
-              <p class="movie-title"><a style="cursor:pointer" onclick="@ToggleFav" >@heart</a> @movieCache.Title (@movieCache.Year)</p>
+              <p class="movie-title">
+                  <a class="hide_info_top" style="cursor:pointer" onclick="@ToggleFav">@heart</a> @movieCache.Title (@movieCache.Year)
+                  <AuthorizeView>
+                      <NotAuthorized>
+                          <div class="hide_info">You have to be logged in to favorite</div>
+                      </NotAuthorized>
+                  </AuthorizeView>
+              </p>
               <p>@movieCache.imdbRating★ (@movieCache.imdbVotes)</p>
               <img class="poster" alt="Poster Image" src="@movieCache.Poster"/>
           </div>

@@ -3,6 +3,20 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+.hide_info{
+    font-size: 10pt;
+    display: none;
+}
+.hide_info_top{
+    text-decoration: none;
+}
+.hide_info_top:hover + .hide_info {
+    text-decoration: none;
+    position: absolute;
+    transform: translate(-10pt, -40pt);
+    display: block;
+    color: green;
+}
 
 h1:focus {
     outline: none;
